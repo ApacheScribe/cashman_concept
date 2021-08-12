@@ -1,4 +1,4 @@
-import 'package:cashman/bloc/observer.dart';
+import 'package:cashman/bloc/bloc_observer.dart';
 import 'package:cashman/ui/page/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

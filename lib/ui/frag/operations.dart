@@ -1,6 +1,8 @@
+import 'package:cashman/bloc/bloc_operations.dart';
 import 'package:cashman/const/color_constant.dart';
 import 'package:cashman/data/models/operation_model.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -19,60 +21,72 @@ class Operations extends StatelessWidget {
       return result;
     }
 
-    return Column(
-      children: [
-        Padding(
-          padding: EdgeInsets.only(left: 16, bottom: 13, top: 29, right: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return BlocProvider(
+      create: (_) => OperationsCubit(),
+      child: BlocBuilder<OperationsCubit, int>(
+        builder: (context, state) {
+          return Column(
             children: [
-              Text(
-                "Operations",
-                style: GoogleFonts.inter(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                  color: kBlackColor,
+              Padding(
+                padding:
+                    EdgeInsets.only(left: 16, bottom: 13, top: 29, right: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Operations",
+                      style: GoogleFonts.inter(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                        color: kBlackColor,
+                      ),
+                    ),
+                    Row(
+                      children: map<Widget>(
+                        datas,
+                        (index, selected) {
+                          return Container(
+                            alignment: Alignment.centerLeft,
+                            height: 9,
+                            width: 9,
+                            margin: EdgeInsets.only(right: 8),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: state == index
+                                  ? kBlueColor
+                                  : kTwentyBlueColor,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Row(
-                children: map<Widget>(datas, (index, selected) {
-                  return Container(
-                    alignment: Alignment.centerLeft,
-                    height: 9,
-                    width: 9,
-                    margin: EdgeInsets.only(right: 8),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: current == index ? kBlueColor : kTwentyBlueColor,
-                    ),
-                  );
-                }),
+              Container(
+                height: 123,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: datas.length,
+                  padding: EdgeInsets.only(left: 16),
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      child: OperationCard(
+                        operation: datas[index].name,
+                        selectedIcon: datas[index].selectedIcon,
+                        unselectedIcon: datas[index].unselectedIcon,
+                        isSelected: state == index,
+                      ),
+                      onTap: () =>
+                          context.read<OperationsCubit>().select(index),
+                    );
+                  },
+                ),
               ),
             ],
-          ),
-        ),
-        Container(
-          height: 123,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: datas.length,
-            padding: EdgeInsets.only(left: 16),
-            itemBuilder: (context, index) {
-              return GestureDetector(
-                child: OperationCard(
-                  operation: datas[index].name,
-                  selectedIcon: datas[index].selectedIcon,
-                  unselectedIcon: datas[index].unselectedIcon,
-                  isSelected: current == index,
-                ),
-                onTap: () {
-                  // TODO: UPDATE STATE TO SET SELECTED
-                },
-              );
-            },
-          ),
-        ),
-      ],
+          );
+        },
+      ),
     );
   }
 }
