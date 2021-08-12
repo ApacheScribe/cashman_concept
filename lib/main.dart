@@ -1,7 +1,10 @@
+import 'package:cashman/bloc/observer.dart';
 import 'package:cashman/ui/page/home.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
+  Bloc.observer = MyBlocObserver();
   runApp(MyApp());
 }
 

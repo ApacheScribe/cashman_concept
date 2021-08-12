@@ -13,7 +13,7 @@ class Greeting extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            "Salutation",
+            "Good Morning,",
             style: GoogleFonts.inter(
               fontSize: 30,
               fontWeight: FontWeight.w700,

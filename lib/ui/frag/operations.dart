@@ -4,14 +4,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Operations extends StatefulWidget {
+class Operations extends StatelessWidget {
   const Operations({Key? key}) : super(key: key);
 
-  @override
-  _OperationsState createState() => _OperationsState();
-}
-
-class _OperationsState extends State<Operations> {
   @override
   Widget build(BuildContext context) {
     int current = 0;
@@ -69,7 +64,6 @@ class _OperationsState extends State<Operations> {
                   selectedIcon: datas[index].selectedIcon,
                   unselectedIcon: datas[index].unselectedIcon,
                   isSelected: current == index,
-                  context: this,
                 ),
                 onTap: () {
                   // TODO: UPDATE STATE TO SET SELECTED
@@ -83,26 +77,19 @@ class _OperationsState extends State<Operations> {
   }
 }
 
-class OperationCard extends StatefulWidget {
+class OperationCard extends StatelessWidget {
   final String operation;
   final bool isSelected;
   final String selectedIcon;
   final String unselectedIcon;
-  final _OperationsState context;
 
   OperationCard({
     required this.operation,
     required this.selectedIcon,
     required this.unselectedIcon,
     required this.isSelected,
-    required this.context,
   });
 
-  @override
-  _OperationCardState createState() => _OperationCardState();
-}
-
-class _OperationCardState extends State<OperationCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -119,21 +106,21 @@ class _OperationCardState extends State<OperationCard> {
           ),
         ],
         borderRadius: BorderRadius.circular(15),
-        color: widget.isSelected ? kBlueColor : kWhiteColor,
+        color: this.isSelected ? kBlueColor : kWhiteColor,
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SvgPicture.asset(
-              widget.isSelected ? widget.selectedIcon : widget.unselectedIcon),
+              this.isSelected ? this.selectedIcon : this.unselectedIcon),
           SizedBox(height: 13),
           Text(
-            widget.operation,
+            this.operation,
             textAlign: TextAlign.center,
             style: GoogleFonts.inter(
               fontSize: 15,
               fontWeight: FontWeight.w700,
-              color: widget.isSelected ? kWhiteColor : kBlueColor,
+              color: this.isSelected ? kWhiteColor : kBlueColor,
             ),
           )
         ],
