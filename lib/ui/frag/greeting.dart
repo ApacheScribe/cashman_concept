@@ -15,7 +15,7 @@ class Greeting extends StatelessWidget {
           Text(
             "Good Morning,",
             style: GoogleFonts.inter(
-              fontSize: 30,
+              fontSize: 25,
               fontWeight: FontWeight.w700,
               color: kBlackColor,
             ),

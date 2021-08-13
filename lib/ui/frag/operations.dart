@@ -124,6 +124,7 @@ class OperationCard extends StatelessWidget {
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SvgPicture.asset(
               this.isSelected ? this.selectedIcon : this.unselectedIcon),
